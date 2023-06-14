@@ -1,0 +1,144 @@
+<!-- Path: templates/main.html -->
+<!doctype html>
+<html lang="en" class="h-100" style="zoom: 150%;">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gene Triplets Change</title>
+    <script>
+      function copyToClipboard(link) {
+          navigator.clipboard.writeText(link)
+      }
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+  
+  <body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(0, 0, 0, 0.1);">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Gene Triplets Change</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link" href="/database">Database</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-2">
+      <div class="row">
+        <div class="col-12">
+          <h3><a style="all: unset; cursor: pointer;" href="/">Proceed Your Gene Sequence</a></h3>
+            
+            <form action="/" method="POST" name="form" enctype="multipart/form-data">
+              <div class="mb-3">
+                <textarea class="form-control" id="text" name="text" rows="2" placeholder="Enter your sequence here..."></textarea>
+              </div>
+                
+              <div class="mb-2">
+                <input class="form-control" type="file" id="file" name="file" accept=".txt">
+              </div>
+                
+              <div class="mb-2">
+                <table style="
+                  border-collapse: separate;
+                  border-spacing: 10px;
+                ">
+                  <tr>
+                    <td>
+                      <label for="param" class="form-label">Type of exchange</label>
+                    </td>
+                    <td> 
+                      <input type="radio" id="faster" name="type" value="faster" checked>
+                      <label for="faster">Maximize</label>
+                    </td>
+                    <td> 
+                      <input type="radio" id="slower" name="type" value="slower">
+                      <label for="slower">Minimize</label><br>
+                    </td>
+                  </tr>
+              
+                  <tr>
+                    <td>
+                      <label for="param" class="form-label">Parameter</label>
+                    </td>
+                    <td> 
+                      <input type="radio" id="p" name="param" value="p" checked>
+                      <label for="p">Transcription speed</label>
+                    </td>
+                    <td> 
+                      <input type="radio" id="s" name="param" value="s">
+                      <label for="s">Promoter activity</label><br>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>
+      
+      <div id='output-div' class="row mt-4">
+        <div class="col-12">
+          <style>
+            tr:has(td:empty) { display: none; }
+          </style>
+          <h3>Output</h3>
+          <table class="table" id="table1" name="table1" style="vertical-align: middle; ">
+            <thead>
+              <tr>
+                <th>Input sequence</th>
+                <td 
+                style="
+                  max-width: 40em !important;
+                  min-width: 40em !important;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  vertical-align: middle;
+                ">
+                  {{ output }}
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Modified sequence</th>
+                <td id='result'
+                style="
+                  max-width: 40em !important;
+                  min-width: 40em !important;
+                  overflow: hidden !important;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                ">{{ output_mod }}</td>
+                <td>
+                  <button class="btn btn-primary" onclick="copyToClipboard(document.getElementById('result').innerText)">Copy</button>
+                </td>
+                <td>
+                  <a class="btn btn-primary" href="data:text/plain;charset=utf-8,{{ output_mod }}" download="output.txt">Download</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+    <footer class="footer mt-auto py-3" style="background-color: rgba(0, 0, 0, 0.1);">
+      <div class="container">
+        <span class="text-muted">
+          © <a style="all: unset; cursor: pointer;" href="/">2023 Gene Triplets Change</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
